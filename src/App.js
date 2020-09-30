@@ -1,24 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
+  const name = useSelector((store) => store.app.name);
+  const color = useSelector((store) => store.app.color);
+
+  const dispatch = useDispatch();
+
+  const first = () => {
+    dispatch({
+      type: "FIRST",
+    })
+  }
+  const second = () => {
+    dispatch({
+      type: "SECOND",
+    })
+  }
+  // const rename = () => {
+  //   dispatch({
+  //     type: "RENAME",
+  //   });
+  // };
+
+  // const recolor = () => {
+  //   dispatch({
+  //     type: "RECOLOR",
+  //   });
+  // };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="header">
+
+      <button className="btn" onClick="">{name}</button> 
+          <button className="btn" style={{ color: `${color}` }} >
+            321
+          </button>
+      </div>
+      <div className="text">{name}</div>
     </div>
   );
 }

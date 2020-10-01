@@ -1,44 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
+import { delTask, addTask, toggleCheck, checkedTask } from "./store/actions";
+import { findAllByDisplayValue } from "@testing-library/react";
 
 function App() {
-  const name = useSelector((store) => store.app.name);
-  const color = useSelector((store) => store.app.color);
+  const todo = useSelector((store) => store.app.todos);
+
+  const [task, setTask] = useState("");
 
   const dispatch = useDispatch();
 
   const first = () => {
-    dispatch({
-      type: "FIRST",
-    })
+    dispatch(addTask(task));
+  };
+  const second = (index) => {
+    dispatch(delTask(index));
+  };
+  const toggleChecked = (index) => {
+    dispatch(toggleCheck(index));
   }
-  const second = () => {
-    dispatch({
-      type: "SECOND",
-    })
+  const checkedTaskSort = (item) => {
+    dispatch(checkedTask(item));
   }
-  // const rename = () => {
-  //   dispatch({
-  //     type: "RENAME",
-  //   });
-  // };
-
-  // const recolor = () => {
-  //   dispatch({
-  //     type: "RECOLOR",
-  //   });
-  // };
+ 
   return (
     <div className="App">
       <div className="header">
-
-      <button className="btn" onClick="">{name}</button> 
-          <button className="btn" style={{ color: `${color}` }} >
-            321
-          </button>
+        <input type="text" value={task} onChange={(e) => setTask(e.target.value)}></input>
+        <button className="btn" onClick={first}>
+          123
+        </button>
+        <button onClick={checkedTaskSort} >1111</button>
       </div>
-      <div className="text">{name}</div>
+      <div>
+        {todo.map((task, index) => (
+          <>
+          <input type="checkbox" className="checkbox" checked={task.completed} onClick={() => toggleChecked(index)}/>
+          <div key={index}>
+            {task.title} 
+            <button className="btn" onClick={() => second(index)}>
+              321
+            </button>
+          </div>
+       </> ))}
+      </div>
+
+      {/* <div className="text">{name}</div> */}
     </div>
   );
 }

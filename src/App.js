@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState} from "react";
 import styled from "./App.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { delTask, addTask, toggleCheck, checkedTask } from "./store/actions";
@@ -14,11 +14,11 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const first = () => {
+  const newTask = () => {
     dispatch(addTask(value));
     setValue('');
   };
-  const second = (index) => {
+  const deleteTask = (index) => {
     dispatch(delTask(index));
   };
   const toggleChecked = (index) => {
@@ -31,16 +31,15 @@ function App() {
   return (
     <div className={styled.App}>
       <div className={styled.mainContainer}>
-        <input type="text" value={value} onChange={(e) => setValue(e.target.value)}></input>
-        <button className={styled.btn} onClick={first}>
+        <input className ={styled.addInput}type="text" value={value} onChange={(e) => setValue(e.target.value)}></input>
+        <button className={styled.btn} onClick={newTask}>
           add
         </button>
         <button className={styled.btn} onClick={checkedTaskSort}>sort</button>
       </div>
       <div>
         {todo.map((task, index) => (
-          <Fragment key={index}>
-            <div className={styled.taskBox}>
+            <div key={index} className={styled.taskBox}>
               <input
                 type="checkbox"
                 className={styled.checkbox}
@@ -48,11 +47,10 @@ function App() {
                 onChange={() => toggleChecked(index)}
               />
               <div className={task.completed ? styled.completedLi : styled.simpleLi}>{task.title} </div>
-              <button className={styled.btn} onClick={() => second(index)}>
+              <button className={styled.btn} onClick={() => deleteTask(index)}>
                 del
               </button>
             </div>
-          </Fragment>
         ))}
       </div>
 

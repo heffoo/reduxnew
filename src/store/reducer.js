@@ -1,5 +1,5 @@
 const initialState = {
-  todos: [{ title: "123", completed: false }],
+  todos: [{ title: "123", completed: false }, { title: "123", completed: false }],
 };
 export default function appReducer(state = initialState, action) {
   switch (action.type) {
@@ -14,23 +14,18 @@ export default function appReducer(state = initialState, action) {
         todos: [...state.todos.filter((task, index) => index !== action.id)],
       };
 
-    case "CHECKED_TASK":
+    case "CHECKED_TASK": 
       return {
         ...state,
-        todos: state.todos.sort((item) => {
-           
-                
-                if (item.completed) {
-                    return -1;
-                }
-
-                else if (!item.completed){
-                    return 1;
-                }
-                else {
-            return 0;
-        }
-        }),
+        todos: [...state.todos.sort((a, b) => {
+          if (a.completed > b.completed) {
+            return -1;
+          }
+          if (a.completed < b.completed) {
+            return 1;
+          }
+          return 0;
+        })],
       };
 
     case "TOGGLE_CHECK":

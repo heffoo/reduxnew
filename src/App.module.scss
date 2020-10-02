@@ -1,0 +1,24 @@
+
+.taskBox {
+  display: flex;
+  align-items: center;
+  height: 50px;
+
+}
+
+.App {
+  width: 50%;
+  margin: 100px  auto;
+  border: 1px solid gray;
+  box-shadow: 3px 3px 20px lightgray;
+  
+  
+  }
+.completedLi {
+  text-decoration: line-through;
+  color: green;
+}
+.btn {
+  width: 45px;
+  height: 35px;
+}

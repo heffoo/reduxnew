@@ -1,49 +1,59 @@
-import React, { useState } from "react";
-import "./App.css";
+import React, { useState, Fragment } from "react";
+import styled from "./App.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { delTask, addTask, toggleCheck, checkedTask } from "./store/actions";
-import { findAllByDisplayValue } from "@testing-library/react";
+
+
+
 
 function App() {
   const todo = useSelector((store) => store.app.todos);
+  const [value, setValue] = useState("");
 
-  const [task, setTask] = useState("");
+  // const [edited, setEdited] = useState(false);
 
   const dispatch = useDispatch();
 
   const first = () => {
-    dispatch(addTask(task));
+    dispatch(addTask(value));
+    setValue('');
   };
   const second = (index) => {
     dispatch(delTask(index));
   };
   const toggleChecked = (index) => {
     dispatch(toggleCheck(index));
-  }
-  const checkedTaskSort = (item) => {
-    dispatch(checkedTask(item));
-  }
- 
+  };
+  const checkedTaskSort = () => {
+    dispatch(checkedTask());
+  };
+
   return (
-    <div className="App">
-      <div className="header">
-        <input type="text" value={task} onChange={(e) => setTask(e.target.value)}></input>
-        <button className="btn" onClick={first}>
-          123
+    <div className={styled.App}>
+      <div className={styled.mainContainer}>
+        <input type="text" value={value} onChange={(e) => setValue(e.target.value)}></input>
+        <button className={styled.btn} onClick={first}>
+          add
         </button>
-        <button onClick={checkedTaskSort} >1111</button>
+        <button className={styled.btn} onClick={checkedTaskSort}>sort</button>
       </div>
       <div>
         {todo.map((task, index) => (
-          <>
-          <input type="checkbox" className="checkbox" checked={task.completed} onClick={() => toggleChecked(index)}/>
-          <div key={index}>
-            {task.title} 
-            <button className="btn" onClick={() => second(index)}>
-              321
-            </button>
-          </div>
-       </> ))}
+          <Fragment key={index}>
+            <div className={styled.taskBox}>
+              <input
+                type="checkbox"
+                className={styled.checkbox}
+                checked={task.completed}
+                onChange={() => toggleChecked(index)}
+              />
+              <div className={task.completed ? styled.completedLi : styled.simpleLi}>{task.title} </div>
+              <button className={styled.btn} onClick={() => second(index)}>
+                del
+              </button>
+            </div>
+          </Fragment>
+        ))}
       </div>
 
       {/* <div className="text">{name}</div> */}

@@ -7,10 +7,10 @@ export const delTask = (id) => {
     export const addTask = (task) => {
         return {
         type: "ADD_TODOS",
-      text: task, 
+        text: task, 
     }
     }
-    export const checkedTask = (task) => {
+    export const checkedTask = () => {
         return {
             type: "CHECKED_TASK"
         }
